@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>טופס כרטיס משמרת</title>
+  <style>
+    /* כללי */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      font-size: 32px;
+    }
+
+    .form-container {
+      background-color: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* כותרות */
+    h2 {
+      color: #4a4a4a;
+      text-align: center;
+      font-size: 3.6em;
+      margin-bottom: 40px;
+    }
+
+    /* שדות קלט */
+    textarea,
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    select {
+      width: 100%;
+      padding: 30px;
+      margin: 20px 0;
+      display: block;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 2.2em;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    /* בחירה מרובה */
+    select {
+      background-color: white;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: left 30px center;
+      background-size: 24px;
+      padding-right: 60px;
+    }
+
+    /* תוויות */
+    label {
+      display: block;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      color: #4a4a4a;
+    }
+
+    /* כפתורים */
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 30px 40px;
+      margin: 30px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 2.4em;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* הסתרה */
+    .hidden {
+      display: none;
+    }
+
+    /* חצים לשדות מספריים */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+      height: 75px;
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* השלמה אוטומטית */
+    .autocomplete-input {
+      position: relative;
+    }
+
+    .autocomplete-items {
+      position: absolute;
+      border: 2px solid #ccc;
+      border-top: none;
+      z-index: 99;
+      top: 100%;
+      left: 0;
+      right: 0;
+      border-radius: 0 0 8px 8px;
+      background-color: white;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .autocomplete-items div {
+      padding: 20px 30px;
+      cursor: pointer;
+      font-size: 2.2em;
+    }
+
+    .autocomplete-items div:hover {
+      background-color: #e9e9e9;
+    }
+
+    .autocomplete-active {
+      background-color: #e9e9e9;
+    }
+
+    /* קבוצות טופס */
+    .form-group {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>טופס כרטיס משמרת</h2>
+    <form id="shiftForm" onsubmit="handleSubmit(event)">
+      <!-- שדות בסיסיים -->
+      <div class="form-group">
+        <label for="rofanName">שם רפואן</label>
+        <div class="autocomplete-input">
+          <input type="text" id="rofanName" required autocomplete="off">
+          <div class="autocomplete-items" id="rofanList"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="shiftType">סוג משמרת</label>
+        <select id="shiftType" required onchange="handleShiftTypeChange()">
+          <option value="">בחר סוג משמרת</option>
+          <option value="רפואה שלמה">רפואה שלמה</option>
+          <option value="מיזם טריו">מיזם טריו</option>
+          <option value="דמו">דמו</option>
+          <option value="הכשרה">הכשרה</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="rofeNameGroup">
+        <label for="rofeName">שם הרופא</label>
+        <div class="autocomplete-input">
+          <input type="text" id="rofeName" autocomplete="off">
+          <div class="autocomplete-items" id="rofeList"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="sessionDate">תאריך הססיה</label>
+        <input type="date" id="sessionDate" required>
+      </div>
+
+      <div class="form-group">
+        <label for="startTime">שעת התחלה</label>
+        <input type="time" id="startTime" required onchange="calculateDuration()">
+      </div>
+
+      <div class="form-group">
+        <label for="endTime">שעת סיום</label>
+        <input type="time" id="endTime" required onchange="calculateDuration()">
+      </div>
+
+      <div class="form-group">
+        <label for="calculatedDuration">משך משמרת מחושב</label>
+        <input type="text" id="calculatedDuration" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="manualDuration">משך משמרת ידני</label>
+        <input type="text" id="manualDuration">
+      </div>
+
+      <div class="form-group">
+        <label for="location">מיקום המשמרת</label>
+        <select id="location" required>
+          <option value="בית">בית</option>
+          <option value="מרפאה">מרפאה</option>
+        </select>
+      </div>
+
+      <!-- שדות רפואה שלמה -->
+      <div id="refoahFields" class="hidden">
+        <div class="form-group">
+          <label for="refoahScreenshots">נשלח קובץ צילומי מסך</label>
+          <select id="refoahScreenshots">
+            <option value="כן">כן</option>
+            <option value="לא">לא</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="refoahCasesHandled">מספר התיקים שטופלו</label>
+          <input type="number" id="refoahCasesHandled" min="1" value="1">
+        </div>
+      </div>
+
+      <!-- שדות מיזם טריו -->
+      <div id="trioFields" class="hidden">
+        <div class="form-group">
+          <label for="casesHandled">מספר תיקים שטופלו</label>
+          <input type="number" id="casesHandled" min="1" value="1">
+        </div>
+        <div class="form-group">
+          <label for="macabiTasks">משימות במערכת מכבי</label>
+          <input type="number" id="macabiTasks" min="1" value="1">
+        </div>
+        <div class="form-group">
+          <label for="shiftQuality">איכות המשמרת</label>
+          <select id="shiftQuality">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- שדות דמו -->
+      <div id="demoFields" class="hidden">
+        <div class="form-group">
+          <label for="demoShiftOrder">סדר משמרת הדמו</label>
+          <select id="demoShiftOrder">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="demoCasesHandled">מספר התיקים שטופלו</label>
+          <input type="number" id="demoCasesHandled" min="1" value="1">
+        </div>
+        <div class="form-group">
+          <label for="communicationClarity">בהירות התקשורת</label>
+          <select id="communicationClarity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="communicationPleasantness">נעימות התקשורת</label>
+          <select id="communicationPleasantness">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="screenshotsSent">נשלחו צילומי מסך</label>
+          <select id="screenshotsSent">
+            <option value="כן">כן</option>
+            <option value="לא">לא</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- שדות הכשרה -->
+      <div id="trainingFields" class="hidden">
+        <div class="form-group">
+          <label for="trainingShiftOrder">סדר משמרת ההכשרה</label>
+          <input type="text" id="trainingShiftOrder">
+        </div>
+        <div class="form-group">
+          <label for="instructorName">שם המדריך</label>
+          <input type="text" id="instructorName">
+        </div>
+        <div class="form-group">
+          <label for="trainingQuality">איכות ההדרכה</label>
+          <select id="trainingQuality">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">הערות למשמרת</label>
+        <textarea id="notes" rows="4"></textarea>
+      </div>
+
+      <button type="submit">שלח טופס</button>
+    </form>
+  </div>
+
+  <script>
+    let rofanNames = [];
+    let rofeNames = [];
+
+    // Load dropdown lists on page load
+    window.onload = function() {
+      google.script.run.withSuccessHandler(initRofanAutocomplete).getRofanList();
+    };
+
+    function initRofanAutocomplete(data) {
+      rofanNames = data;
+      setupAutocomplete(document.getElementById('rofanName'), 'rofanList', rofanNames);
+    }
+
+    function initRofeAutocomplete(data) {
+      rofeNames = data;
+      setupAutocomplete(document.getElementById('rofeName'), 'rofeList', rofeNames);
+    }
+
+    function setupAutocomplete(inp, listId, arr) {
+      let currentFocus;
+      
+      inp.addEventListener("input", function(e) {
+        let a, b, i, val = this.value;
+        closeAllLists();
+        if (!val) { return false; }
+        currentFocus = -1;
+        
+        a = document.getElementById(listId);
+        a.innerHTML = "";
+        
+        for (i = 0; i < arr.length; i++) {
+          if (arr[i].toLowerCase().includes(val.toLowerCase())) {
+            b = document.createElement("DIV");
+            b.innerHTML = arr[i];
+            b.addEventListener("click", function(e) {
+              inp.value = this.innerHTML;
+              closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+      });
+
+      inp.addEventListener("keydown", function(e) {
+        let x = document.getElementById(listId);
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) { // arrow DOWN
+          currentFocus++;
+          addActive(x);
+        } else if (e.keyCode == 38) { // arrow UP
+          currentFocus--;
+          addActive(x);
+        } else if (e.keyCode == 13) { // ENTER
+          e.preventDefault();
+          if (currentFocus > -1) {
+            if (x) x[currentFocus].click();
+          }
+        }
+      });
+
+      function addActive(x) {
+        if (!x) return false;
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        x[currentFocus].classList.add("autocomplete-active");
+      }
+
+      function removeActive(x) {
+        for (let i = 0; i < x.length; i++) {
+          x[i].classList.remove("autocomplete-active");
+        }
+      }
+    }
+
+          function closeAllLists(elmnt) {
+      let x = document.getElementsByClassName("autocomplete-items");
+      for (let i = 0; i < x.length; i++) {
+        if (elmnt != x[i]) {
+          x[i].innerHTML = "";
+        }
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+    });
+
+    function calculateDuration() {
+      var startTime = document.getElementById('startTime').value;
+      var endTime = document.getElementById('endTime').value;
+
+      if (startTime && endTime) {
+        var startDate = new Date();
+        var endDate = new Date();
+        var [startHours, startMinutes] = startTime.split(':');
+        var [endHours, endMinutes] = endTime.split(':');
+        
+        startDate.setHours(parseInt(startHours), parseInt(startMinutes), 0);
+        endDate.setHours(parseInt(endHours), parseInt(endMinutes), 0);
+        
+        if (endDate < startDate) {
+          endDate.setDate(endDate.getDate() + 1);
+        }
+        
+        var diff = (endDate - startDate) / (1000 * 60);
+        var hours = Math.floor(diff / 60);
+        var minutes = Math.floor(diff % 60);
+        
+        document.getElementById('calculatedDuration').value = 
+          hours + ' שעות-' + minutes + ' דקות';
+      }
+    }
+
+    function handleShiftTypeChange() {
+      let shiftType = document.getElementById('shiftType').value;
+      let rofeNameGroup = document.getElementById('rofeNameGroup');
+      let trioFields = document.getElementById('trioFields');
+      let demoFields = document.getElementById('demoFields');
+      let trainingFields = document.getElementById('trainingFields');
+      let refoahFields = document.getElementById('refoahFields');
+
+      // Reset and hide all additional fields
+      trioFields.classList.add('hidden');
+      demoFields.classList.add('hidden');
+      trainingFields.classList.add('hidden');
+      refoahFields.classList.add('hidden');
+
+      // Clear and update rofe list
+      document.getElementById('rofeName').value = '';
+      document.getElementById('rofeList').innerHTML = '';
+
+      if (shiftType === 'הכשרה') {
+        rofeNameGroup.classList.add('hidden');
+        trainingFields.classList.remove('hidden');
+      } else {
+        rofeNameGroup.classList.remove('hidden');
+        google.script.run.withSuccessHandler(initRofeAutocomplete).getRofeList(shiftType);
+
+        if (shiftType === 'מיזם טריו') {
+          trioFields.classList.remove('hidden');
+        } else if (shiftType === 'דמו') {
+          demoFields.classList.remove('hidden');
+        } else if (shiftType === 'רפואה שלמה') {
+          refoahFields.classList.remove('hidden');
+        }
+      }
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      var formData = {
+        rofanName: document.getElementById('rofanName').value,
+        shiftType: document.getElementById('shiftType').value,
+        rofeName: document.getElementById('rofeName').value,
+        sessionDate: document.getElementById('sessionDate').value,
+        startTime: document.getElementById('startTime').value,
+        endTime: document.getElementById('endTime').value,
+        calculatedDuration: document.getElementById('calculatedDuration').value,
+        manualDuration: document.getElementById('manualDuration').value,
+        location: document.getElementById('location').value,
+        notes: document.getElementById('notes').value
+      };
+
+      // Add additional fields based on shift type
+      if (formData.shiftType === 'מיזם טריו') {
+        formData.casesHandled = document.getElementById('casesHandled').value;
+        formData.macabiTasks = document.getElementById('macabiTasks').value;
+        formData.shiftQuality = document.getElementById('shiftQuality').value;
+      } else if (formData.shiftType === 'דמו') {
+        formData.demoShiftOrder = document.getElementById('demoShiftOrder').value;
+        formData.demoCasesHandled = document.getElementById('demoCasesHandled').value;
+        formData.communicationClarity = document.getElementById('communicationClarity').value;
+        formData.communicationPleasantness = document.getElementById('communicationPleasantness').value;
+        formData.screenshotsSent = document.getElementById('screenshotsSent').value;
+      } else if (formData.shiftType === 'הכשרה') {
+        formData.trainingShiftOrder = document.getElementById('trainingShiftOrder').value;
+        formData.instructorName = document.getElementById('instructorName').value;
+        formData.trainingQuality = document.getElementById('trainingQuality').value;
+      } else if (formData.shiftType === 'רפואה שלמה') {
+        formData.refoahScreenshots = document.getElementById('refoahScreenshots').value;
+        formData.refoahCasesHandled = document.getElementById('refoahCasesHandled').value;
+      }
+
+      google.script.run
+        .withSuccessHandler(function(response) {
+          alert(response);
+          document.getElementById('shiftForm').reset();
+        })
+        .withFailureHandler(function(error) {
+          alert('שגיאה: ' + error);
+        })
+        .submitForm(formData);
+    }
+  </script>
+</body>
+</html>
