@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html dir="rtl">
 <head>
   <base target="_top">
@@ -15,130 +16,185 @@
       font-size: 32px;
     }
 
-    .form-container {
-      background-color: white;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      width: 100%;
-      box-sizing: border-box;
-    }
+.form-container {
+  background-color: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    /* כותרות */
-    h2 {
-      color: #4a4a4a;
-      text-align: center;
-      font-size: 3.6em;
-      margin-bottom: 40px;
-    }
+/* כותרות */
+h2 {
+  color: #4a4a4a;
+  text-align: center;
+  font-size: 3.6em;
+  margin-bottom: 40px;
+}
 
-    /* שדות קלט */
-    textarea,
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    input[type="time"],
-    select {
-      width: 100%;
-      padding: 30px;
-      margin: 20px 0;
-      display: block;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
-      font-size: 2.2em;
-      -webkit-appearance: none;
-      appearance: none;
-    }
+/* שדות קלט */
+textarea,
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 30px;
+  margin: 20px 0;
+  display: block;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 2.2em;
+  -webkit-appearance: none;
+  appearance: none;
+}
 
-    /* בחירה מרובה */
-    select {
-      background-color: white;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: left 30px center;
-      background-size: 24px;
-      padding-right: 60px;
-    }
+/* בחירה מרובה */
+select {
+  background-color: white;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: left 30px center;
+  background-size: 24px;
+  padding-right: 60px;
+}
 
-    /* תוויות */
-    label {
-      display: block;
-      font-size: 2.2em;
-      margin-bottom: 20px;
-      color: #4a4a4a;
-    }
+/* תוויות */
+label {
+  display: block;
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+}
 
-    /* כפתורים */
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 30px 40px;
-      margin: 30px 0;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      font-size: 2.4em;
-    }
+/* כפתורים */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 30px 40px;
+  margin: 30px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 2.4em;
+}
 
-    button:hover {
-      background-color: #45a049;
-    }
+button:hover {
+  background-color: #45a049;
+}
 
-    /* הסתרה */
-    .hidden {
-      display: none;
-    }
+/* הסתרה */
+.hidden {
+  display: none;
+}
 
-    /* חצים לשדות מספריים */
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      opacity: 1;
-      height: 75px;
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+/* השלמה אוטומטית */
+.autocomplete-input {
+  position: relative;
+}
 
-    /* השלמה אוטומטית */
-    .autocomplete-input {
-      position: relative;
-    }
+.autocomplete-items {
+  position: absolute;
+  border: 2px solid #ccc;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 8px 8px;
+  background-color: white;
+  max-height: 300px;
+  overflow-y: auto;
+}
 
-    .autocomplete-items {
-      position: absolute;
-      border: 2px solid #ccc;
-      border-top: none;
-      z-index: 99;
-      top: 100%;
-      left: 0;
-      right: 0;
-      border-radius: 0 0 8px 8px;
-      background-color: white;
-      max-height: 300px;
-      overflow-y: auto;
-    }
+.autocomplete-items div {
+  padding: 20px 30px;
+  cursor: pointer;
+  font-size: 2.2em;
+}
 
-    .autocomplete-items div {
-      padding: 20px 30px;
-      cursor: pointer;
-      font-size: 2.2em;
-    }
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}
 
-    .autocomplete-items div:hover {
-      background-color: #e9e9e9;
-    }
+.autocomplete-active {
+  background-color: #e9e9e9;
+}
 
-    .autocomplete-active {
-      background-color: #e9e9e9;
-    }
+/* קבוצות טופס */
+.form-group {
+  margin-bottom: 30px;
+}
 
-    /* קבוצות טופס */
-    .form-group {
-      margin-bottom: 30px;
-    }
+/* תאריך */
+
+.date-input-container {
+display: flex;
+align-items: center;
+justify-content: right; /* במקום flex-end */
+gap: 20px;
+}
+
+.date-select {
+  width: 100px !important;
+  padding: 15px !important;
+  margin: 0 !important;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 1.8em !important;
+  background-color: white;
+  background-position: left 10px center;
+  background-size: 16px;
+  padding-left: 30px !important;
+}
+
+.date-display {
+  font-size: 2.2em;
+  line-height: 1;
+  color: #4a4a4a;
+  order: -1;
+}
+
+/* בוחר זמן */
+.time-picker {
+  display: flex;
+  gap: 20px;
+}
+
+.time-picker select {
+  width: 45%;
+  text-align: center;
+  font-size: 2.2em;
+  padding: 15px;
+}
+
+/* להגדיל את הטקסט בתוך הבחירה */
+.time-picker select option {
+font-size: 1em;
+text-align: center;
+}
+
+
+/* בוחר משך */
+.duration-picker {
+  display: flex;
+  gap: 20px;
+}
+
+.duration-picker select {
+  width: 45%;
+  text-align: center;
+  font-size: 2.2em;
+  padding: 15px;
+}
+
+.duration-picker select option {
+  font-size: 1em;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
@@ -154,174 +210,313 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="shiftType">סוג משמרת</label>
-        <select id="shiftType" required onchange="handleShiftTypeChange()">
-          <option value="">בחר סוג משמרת</option>
-          <option value="רפואה שלמה">רפואה שלמה</option>
-          <option value="מיזם טריו">מיזם טריו</option>
-          <option value="דמו">דמו</option>
-          <option value="הכשרה">הכשרה</option>
+<div class="form-group">
+    <label for="shiftType">סוג משמרת</label>
+    <select id="shiftType" required onchange="handleShiftTypeChange()">
+      <option value="">בחר סוג משמרת</option>
+      <option value="רפואה שלמה">רפואה שלמה</option>
+      <option value="מיזם טריו">מיזם טריו</option>
+      <option value="דמו">דמו</option>
+      <option value="הכשרה">הכשרה</option>
+    </select>
+  </div>
+
+  <div class="form-group" id="rofeNameGroup">
+    <label for="rofeName">שם הרופא</label>
+    <div class="autocomplete-input">
+      <input type="text" id="rofeName" autocomplete="off">
+      <div class="autocomplete-items" id="rofeList"></div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="sessionDate">תאריך הססיה</label>
+    <div class="date-input-container">
+      <span id="displayDate" class="date-display"></span>
+      <select id="sessionDate" required class="date-select">
+        <!-- יתמלא דינמית -->
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="startTime">שעת התחלה</label>
+
+      <div class="time-picker">
+        <select id="startTimeMinutes" onchange="updateStartTime()">
+          <!-- דקות -->
+        </select>
+        <select id="startTimeHours" onchange="updateStartTime()">
+          <!-- שעות -->
         </select>
       </div>
+    <input type="hidden" id="startTime">
+  </div>
 
-      <div class="form-group" id="rofeNameGroup">
-        <label for="rofeName">שם הרופא</label>
-        <div class="autocomplete-input">
-          <input type="text" id="rofeName" autocomplete="off">
-          <div class="autocomplete-items" id="rofeList"></div>
-        </div>
-      </div>
+  <div class="form-group">
+    <label for="endTime">שעת סיום</label>
+    <div class="time-picker">
+      <select id="endTimeMinutes" onchange="updateEndTime()">
+        <!-- דקות -->
+      </select>
+      <select id="endTimeHours" onchange="updateEndTime()">
+        <!-- שעות -->
+      </select>
+    </div>
+    <input type="hidden" id="endTime">
+  </div>
 
-      <div class="form-group">
-        <label for="sessionDate">תאריך הססיה</label>
-        <input type="date" id="sessionDate" required>
-      </div>
+  <div class="form-group">
+    <label for="calculatedDuration">משך משמרת מחושב</label>
+    <input type="text" id="calculatedDuration" readonly>
+  </div>
 
-      <div class="form-group">
-        <label for="startTime">שעת התחלה</label>
-        <input type="time" id="startTime" required onchange="calculateDuration()">
-      </div>
+  <div class="form-group">
+    <label for="manualDuration">משך משמרת ידני</label>
+    <div class="duration-picker">
+      <select id="manualDurationMinutes">
+        <option value="" disabled selected>דקות</option> <!-- placeholder -->
+        <!-- דקות: 00-55 -->
+      </select>
+      <select id="manualDurationHours">
+        <option value="" disabled selected>שעות</option> <!-- placeholder -->
+        <!-- שעות: 00-24 -->
+      </select>
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label for="endTime">שעת סיום</label>
-        <input type="time" id="endTime" required onchange="calculateDuration()">
-      </div>
+  <div class="form-group">
+    <label for="location">מיקום המשמרת</label>
+    <select id="location" required>
+      <option value="בית">בית</option>
+      <option value="מרפאה">מרפאה</option>
+    </select>
+  </div>
 
-      <div class="form-group">
-        <label for="calculatedDuration">משך משמרת מחושב</label>
-        <input type="text" id="calculatedDuration" readonly>
-      </div>
+  <!-- שדות רפואה שלמה -->
+  <div id="refoahFields" class="hidden">
+    <div class="form-group">
+      <label for="refoahScreenshots">נשלח קובץ צילומי מסך</label>
+      <select id="refoahScreenshots">
+        <option value="כן">כן</option>
+        <option value="לא">לא</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="refoahCasesHandled">מספר התיקים שטופלו</label>
+      <input type="number" id="refoahCasesHandled" min="1" value="1">
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label for="manualDuration">משך משמרת ידני</label>
-        <input type="text" id="manualDuration">
-      </div>
+  <!-- שדות מיזם טריו -->
+  <div id="trioFields" class="hidden">
+    <div class="form-group">
+      <label for="casesHandled">מספר תיקים שטופלו</label>
+      <input type="number" id="casesHandled" min="1" value="1">
+    </div>
+    <div class="form-group">
+      <label for="macabiTasks">משימות במערכת מכבי</label>
+      <input type="number" id="macabiTasks" min="1" value="1">
+    </div>
+    <div class="form-group">
+      <label for="shiftQuality">איכות המשמרת</label>
+      <select id="shiftQuality">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label for="location">מיקום המשמרת</label>
-        <select id="location" required>
-          <option value="בית">בית</option>
-          <option value="מרפאה">מרפאה</option>
-        </select>
-      </div>
+  <!-- שדות דמו -->
+  <div id="demoFields" class="hidden">
+    <div class="form-group">
+      <label for="demoShiftOrder">סדר משמרת הדמו</label>
+      <select id="demoShiftOrder">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="demoCasesHandled">מספר התיקים שטופלו</label>
+      <input type="number" id="demoCasesHandled" min="1" value="1">
+    </div>
+    <div class="form-group">
+      <label for="communicationClarity">בהירות התקשורת</label>
+      <select id="communicationClarity">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="communicationPleasantness">נעימות התקשורת</label>
+      <select id="communicationPleasantness">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="screenshotsSent">נשלחו צילומי מסך</label>
+      <select id="screenshotsSent">
+        <option value="כן">כן</option>
+        <option value="לא">לא</option>
+      </select>
+    </div>
+  </div>
 
-      <!-- שדות רפואה שלמה -->
-      <div id="refoahFields" class="hidden">
-        <div class="form-group">
-          <label for="refoahScreenshots">נשלח קובץ צילומי מסך</label>
-          <select id="refoahScreenshots">
-            <option value="כן">כן</option>
-            <option value="לא">לא</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="refoahCasesHandled">מספר התיקים שטופלו</label>
-          <input type="number" id="refoahCasesHandled" min="1" value="1">
-        </div>
-      </div>
+  <!-- שדות הכשרה -->
+  <div id="trainingFields" class="hidden">
+    <div class="form-group">
+      <label for="trainingShiftOrder">סדר משמרת ההכשרה</label>
+      <input type="text" id="trainingShiftOrder">
+    </div>
+    <div class="form-group">
+      <label for="instructorName">שם המדריך</label>
+      <input type="text" id="instructorName">
+    </div>
+    <div class="form-group">
+      <label for="trainingQuality">איכות ההדרכה</label>
+      <select id="trainingQuality">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+  </div>
 
-      <!-- שדות מיזם טריו -->
-      <div id="trioFields" class="hidden">
-        <div class="form-group">
-          <label for="casesHandled">מספר תיקים שטופלו</label>
-          <input type="number" id="casesHandled" min="1" value="1">
-        </div>
-        <div class="form-group">
-          <label for="macabiTasks">משימות במערכת מכבי</label>
-          <input type="number" id="macabiTasks" min="1" value="1">
-        </div>
-        <div class="form-group">
-          <label for="shiftQuality">איכות המשמרת</label>
-          <select id="shiftQuality">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-      </div>
+  <div class="form-group">
+    <label for="notes">הערות למשמרת</label>
+    <input type="text" id="notes"> <!-- במקום textarea -->
 
-      <!-- שדות דמו -->
-      <div id="demoFields" class="hidden">
-        <div class="form-group">
-          <label for="demoShiftOrder">סדר משמרת הדמו</label>
-          <select id="demoShiftOrder">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="demoCasesHandled">מספר התיקים שטופלו</label>
-          <input type="number" id="demoCasesHandled" min="1" value="1">
-        </div>
-        <div class="form-group">
-          <label for="communicationClarity">בהירות התקשורת</label>
-          <select id="communicationClarity">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="communicationPleasantness">נעימות התקשורת</label>
-          <select id="communicationPleasantness">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="screenshotsSent">נשלחו צילומי מסך</label>
-          <select id="screenshotsSent">
-            <option value="כן">כן</option>
-            <option value="לא">לא</option>
-          </select>
-        </div>
-      </div>
+  </div>
 
-      <!-- שדות הכשרה -->
-      <div id="trainingFields" class="hidden">
-        <div class="form-group">
-          <label for="trainingShiftOrder">סדר משמרת ההכשרה</label>
-          <input type="text" id="trainingShiftOrder">
-        </div>
-        <div class="form-group">
-          <label for="instructorName">שם המדריך</label>
-          <input type="text" id="instructorName">
-        </div>
-        <div class="form-group">
-          <label for="trainingQuality">איכות ההדרכה</label>
-          <select id="trainingQuality">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-      </div>
+  <button type="submit">שלח טופס</button>
+</form>
 
-      <div class="form-group">
-        <label for="notes">הערות למשמרת</label>
-        <textarea id="notes" rows="4"></textarea>
-      </div>
-
-      <button type="submit">שלח טופס</button>
-    </form>
   </div>
 
   <script>
     let rofanNames = [];
     let rofeNames = [];
+    let currentMonth, currentYear;
 
-    // Load dropdown lists on page load
+    // אתחול בטעינת הדף
     window.onload = function() {
+      initDatePicker();
+      initTimePickers();
+      initManualDurationPickers();
       google.script.run.withSuccessHandler(initRofanAutocomplete).getRofanList();
     };
+
+    function initDatePicker() {
+      const today = new Date();
+      const currentDay = today.getDate();
+      currentMonth = String(today.getMonth() + 1).padStart(2, '0');
+      currentYear = today.getFullYear();
+
+      const days = Array.from({length: currentDay}, (_, i) =>
+        String(i + 1).padStart(2, '0')
+      ).reverse();
+
+      const select = document.getElementById('sessionDate');
+      days.forEach(day => {
+        const option = document.createElement('option');
+        option.value = day;
+        option.textContent = day;
+        select.appendChild(option);
+      });
+
+      select.value = String(currentDay).padStart(2, '0');
+      updateDisplayDate(String(currentDay).padStart(2, '0'));
+
+      select.addEventListener('change', function(e) {
+        updateDisplayDate(e.target.value);
+      });
+    }
+
+    function initTimePickers() {
+      const hourSelects = ['startTimeHours', 'endTimeHours'];
+      const minuteSelects = ['startTimeMinutes', 'endTimeMinutes'];
+
+      hourSelects.forEach(id => {
+        const select = document.getElementById(id);
+        for (let i = 0; i < 24; i++) {
+          const option = document.createElement('option');
+          option.value = String(i).padStart(2, '0');
+          option.textContent = String(i).padStart(2, '0');
+          select.appendChild(option);
+        }
+      });
+
+      minuteSelects.forEach(id => {
+        const select = document.getElementById(id);
+        for (let i = 0; i <= 55; i += 5) {
+          const option = document.createElement('option');
+          option.value = String(i).padStart(2, '0');
+          option.textContent = String(i).padStart(2, '0');
+          select.appendChild(option);
+        }
+      });
+    }
+
+    function initManualDurationPickers() {
+      const hoursSelect = document.getElementById('manualDurationHours');
+      const minutesSelect = document.getElementById('manualDurationMinutes');
+
+      // שעות (0-24)
+      let optionHourPlaceholder = document.createElement('option');
+      optionHourPlaceholder.value = '';
+      optionHourPlaceholder.textContent = 'שעות';
+      optionHourPlaceholder.disabled = true;
+      optionHourPlaceholder.selected = true;
+      hoursSelect.appendChild(optionHourPlaceholder);
+      for (let i = 0; i <= 24; i++) {
+        const option = document.createElement('option');
+        option.value = String(i).padStart(2, '0');
+        option.textContent = String(i).padStart(2, '0');
+        hoursSelect.appendChild(option);
+      }
+
+      // דקות (0-55, קפיצות של 5)
+      let optionMinutePlaceholder = document.createElement('option');
+      optionMinutePlaceholder.value = '';
+      optionMinutePlaceholder.textContent = 'דקות';
+      optionMinutePlaceholder.disabled = true;
+      optionMinutePlaceholder.selected = true;
+      minutesSelect.appendChild(optionMinutePlaceholder);
+      for (let i = 0; i <= 55; i += 5) {
+        const option = document.createElement('option');
+        option.value = String(i).padStart(2, '0');
+        option.textContent = String(i).padStart(2, '0');
+        minutesSelect.appendChild(option);
+      }
+    }
+
+    function updateDisplayDate(day) {
+      const displayDate = `${day}/${currentMonth}/${currentYear}`;
+      document.getElementById('displayDate').textContent = displayDate;
+    }
+
+    function updateStartTime() {
+      const hours = document.getElementById('startTimeHours').value;
+      const minutes = document.getElementById('startTimeMinutes').value;
+      document.getElementById('startTime').value = `${hours}:${minutes}`;
+      calculateDuration();
+    }
+
+    function updateEndTime() {
+      const hours = document.getElementById('endTimeHours').value;
+      const minutes = document.getElementById('endTimeMinutes').value;
+      document.getElementById('endTime').value = `${hours}:${minutes}`;
+      calculateDuration();
+    }
 
     function initRofanAutocomplete(data) {
       rofanNames = data;
@@ -335,16 +530,16 @@
 
     function setupAutocomplete(inp, listId, arr) {
       let currentFocus;
-      
+
       inp.addEventListener("input", function(e) {
         let a, b, i, val = this.value;
         closeAllLists();
         if (!val) { return false; }
         currentFocus = -1;
-        
+
         a = document.getElementById(listId);
         a.innerHTML = "";
-        
+
         for (i = 0; i < arr.length; i++) {
           if (arr[i].toLowerCase().includes(val.toLowerCase())) {
             b = document.createElement("DIV");
@@ -361,13 +556,13 @@
       inp.addEventListener("keydown", function(e) {
         let x = document.getElementById(listId);
         if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) { // arrow DOWN
+        if (e.keyCode == 40) { // חץ למטה
           currentFocus++;
           addActive(x);
-        } else if (e.keyCode == 38) { // arrow UP
+        } else if (e.keyCode == 38) { // חץ למעלה
           currentFocus--;
           addActive(x);
-        } else if (e.keyCode == 13) { // ENTER
+        } else if (e.keyCode == 13) { // Enter
           e.preventDefault();
           if (currentFocus > -1) {
             if (x) x[currentFocus].click();
@@ -390,7 +585,7 @@
       }
     }
 
-          function closeAllLists(elmnt) {
+    function closeAllLists(elmnt) {
       let x = document.getElementsByClassName("autocomplete-items");
       for (let i = 0; i < x.length; i++) {
         if (elmnt != x[i]) {
@@ -412,20 +607,20 @@
         var endDate = new Date();
         var [startHours, startMinutes] = startTime.split(':');
         var [endHours, endMinutes] = endTime.split(':');
-        
+
         startDate.setHours(parseInt(startHours), parseInt(startMinutes), 0);
         endDate.setHours(parseInt(endHours), parseInt(endMinutes), 0);
-        
+
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
         }
-        
+
         var diff = (endDate - startDate) / (1000 * 60);
         var hours = Math.floor(diff / 60);
         var minutes = Math.floor(diff % 60);
-        
-        document.getElementById('calculatedDuration').value = 
-          hours + ' שעות-' + minutes + ' דקות';
+
+        document.getElementById('calculatedDuration').value =
+          `${String(hours).padStart(2, '0')} שעות-${String(minutes).padStart(2, '0')} דקות`;
       }
     }
 
@@ -437,13 +632,13 @@
       let trainingFields = document.getElementById('trainingFields');
       let refoahFields = document.getElementById('refoahFields');
 
-      // Reset and hide all additional fields
+      // איפוס והסתרת כל השדות הנוספים
       trioFields.classList.add('hidden');
       demoFields.classList.add('hidden');
-      trainingFields.classList.add('hidden');
+        trainingFields.classList.add('hidden');
       refoahFields.classList.add('hidden');
 
-      // Clear and update rofe list
+      // איפוס ועדכון רשימת הרופאים
       document.getElementById('rofeName').value = '';
       document.getElementById('rofeList').innerHTML = '';
 
@@ -464,23 +659,34 @@
       }
     }
 
+    function updateManualDuration() {
+      const hours = document.getElementById('manualDurationHours').value;
+      const minutes = document.getElementById('manualDurationMinutes').value;
+      if (hours && minutes) { // Check if both have values
+        return `${hours} שעות-${minutes} דקות`;
+      } else {
+        return ''; // Return empty string if not both selected
+      }
+    }
+
+
     function handleSubmit(event) {
       event.preventDefault();
-      
+
       var formData = {
         rofanName: document.getElementById('rofanName').value,
         shiftType: document.getElementById('shiftType').value,
         rofeName: document.getElementById('rofeName').value,
-        sessionDate: document.getElementById('sessionDate').value,
+        sessionDate: `${document.getElementById('sessionDate').value}/${currentMonth}/${currentYear}`,
         startTime: document.getElementById('startTime').value,
         endTime: document.getElementById('endTime').value,
         calculatedDuration: document.getElementById('calculatedDuration').value,
-        manualDuration: document.getElementById('manualDuration').value,
+        manualDuration: updateManualDuration(),
         location: document.getElementById('location').value,
         notes: document.getElementById('notes').value
       };
 
-      // Add additional fields based on shift type
+      // הוספת שדות בהתאם לסוג המשמרת
       if (formData.shiftType === 'מיזם טריו') {
         formData.casesHandled = document.getElementById('casesHandled').value;
         formData.macabiTasks = document.getElementById('macabiTasks').value;
@@ -504,6 +710,10 @@
         .withSuccessHandler(function(response) {
           alert(response);
           document.getElementById('shiftForm').reset();
+          // איפוס נוסף של שדות שלא מתאפסים אוטומטית
+          document.getElementById('calculatedDuration').value = '';
+          document.getElementById('displayDate').textContent = '';
+          handleShiftTypeChange(); // מסתיר את כל השדות המיוחדים
         })
         .withFailureHandler(function(error) {
           alert('שגיאה: ' + error);
@@ -511,5 +721,6 @@
         .submitForm(formData);
     }
   </script>
+
 </body>
 </html>
